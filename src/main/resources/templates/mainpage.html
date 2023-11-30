@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang = "en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <meta charset="UTF-8">
+    <title>MainPage</title>
+</head>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <meta charset="UTF-8">
+    <title>MainPage</title>
+    <style>
+        .modal {
+            display: none;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .modal-dialog {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            margin: 0;
+        }
+
+        .modal-backdrop {
+            z-index: -1;
+        }
+
+        .imageBox {
+            width: 300px;
+            height: 200px;
+        }
+
+        .popularContainer {
+            margin-top: 20px;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .card-body img {
+            width: 300px !important;
+            height: 300px !important;
+            object-fit: contain;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .card-body button {
+            width: 100%;
+            border: 1px solid black;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .row {
+            margin-right: 0;
+            margin-left: 0;
+        }
+
+        .col-md-4 {
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+    </style>
+<body>
+<button onclick="logout()">로그아웃</button>
+<div class="popularContainer">
+    <div class="popularGallery">
+        <div class="row">
+            <div class="col-md-4 mb-4"> <!-- Add a margin at the bottom and right of the column -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Name: 권준혁</h5>
+                        <p class="card-text">Title: Day off</p>
+                        <p class="card-text">Content: 놀면서 듣기 좋은 노래</p>
+                        <img class="card-img-top" src="../images/NothingLikeWine.jpeg" alt="Image">
+                        <p class="card-text">다른 플레이 리스트</p>
+                        <button type="button" class="btn btn-outline-white">노래 제목 1</button>
+                        <button type="button" class="btn btn-outline-white">노래 제목 2</button>
+                        <button type="button" class="btn btn-outline-white">노래 제목 5</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4"> <!-- Add a margin at the bottom and right of the column -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Name: 정영도</h5>
+                        <p class="card-text">Title: Nothing like wine</p>
+                        <p class="card-text">Content: 코딩하면서 듣기 좋은 노래</p>
+                        <img class="card-img-top" src="../images/dayOff.jpeg" alt="Image">
+                        <p class="card-text">다른 플레이 리스트</p>
+                        <button type="button" class="btn btn-outline-white">노래 제목 3</button>
+                        <button type="button" class="btn btn-outline-white">노래 제목 6</button>
+                        <button type="button" class="btn btn-outline-white">노래 제목 7</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4"> <!-- Add a margin at the bottom and right of the column -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Name: 정영도</h5>
+                        <p class="card-text">Title: 사건의 지평선</p>
+                        <p class="card-text">Content: 그냥 좋아~</p>
+                        <img class="card-img-top" src="../images/HorizonofEvents.jpeg" alt="Image">
+                        <p class="card-text">다른 플레이 리스트</p>
+                        <button type="button" class="btn btn-outline-white">노래 제목 4</button>
+                        <button type="button" class="btn btn-outline-white">노래 제목 8</button>
+                        <button type="button" class="btn btn-outline-white">노래 제목 9</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    function logout() {
+        alert("로그 아웃!");
+        // 토큰 삭제 
+        Cookies.remove('Authorization', { path: '/' });
+        window.location.href = "/api/user/login-page";
+    }
+</script>
+</html>

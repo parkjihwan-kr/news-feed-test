@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<style>
+    * { padding: 0; margin: 0; }
+
+    html, body {
+        height: 100%;
+        background: #ffffff;
+    }
+
+    #container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+
+    #loginBox {
+        width: 300px;
+        text-align: center;
+        background-color: #ffffff;
+    }
+    .input-form-box {
+        border: 0px solid #ff0000;
+        display: flex;
+        margin-bottom: 5px;
+    }
+    .input-form-box > span {
+        display: block;
+        text-align: left;
+        padding-top: 5px;
+        min-width: 65px;
+    }
+    .button-login-box {
+        margin: 10px 0;
+    }
+    #loginBoxTitle {
+        color:#000000;
+        font-weight: bold;
+        font-size: 32px;
+        text-transform: uppercase;
+        padding: 5px;
+        margin-bottom: 20px;
+        background: linear-gradient(to right, #270a09, #8ca6ce);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    #inputBox {
+        margin: 10px;
+    }
+
+    #inputBox button {
+        padding: 3px 5px;
+    }
+
+</style>
+<body><div id="container">
+    <div id="loginBox">
+        <div id="loginBoxTitle">Just Do it!</div>
+        <div id="inputBox">
+            <div class="input-form-box"><span>아이디 </span><input type="text" name="username" id="username" class="form-control"></div>
+            <div class="input-form-box"><span>비밀번호 </span><input type="password" name="password" id="password" class="form-control"></div>
+            <div class="button-login-box" >
+                <button id="login-id-submit" class="btn btn-primary" onclick="login()">로그인</button>
+                <button id="login-id-btn" class="btn btn-primary" onclick="location.href='/user/signup'">회원가입</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    $(document).ready(function () {
+        // 토큰 삭제
+        Cookies.remove('Authorization', {path: '/'});
+    });
+    const host = 'http://' + window.location.host;
+
+    function login() {
+        let username = $('#username').val();
+        let password = $('#password').val();
+
+        $.ajax({
+            type: "POST",
+            url: `/api/user/login`,
+            contentType: "application/json",
+            data: JSON.stringify({username: username, password: password}),
+        }).done(function (res, status, xhr) {
+            Cookies.set(xhr.getResponseHeader('Authorization'));
+            console.log(res);
+            console.log(xhr);
+            alert("로그인 성공!");
+            // client에서 처리를 해줘야함
+            // localhost:8080~~ -> domain에 따라 쿠키가 따라다닌다
+            window.location.href = "/";
+        }).fail(function (xhr, textStatus, errorThrown) {
+            alert("로그인 실패!");
+            console.log('statusCode: ' + xhr.status);
+            window.location.href = host + '/api/user/login-page?error'
+        });
+    }
+</script>
+</html>

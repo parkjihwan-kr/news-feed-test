@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <title>회원가입 페이지</title>
+</head>
+<body>
+<div id="signup">
+    <form action="/api/user/signup" method="post">
+        <div class="login-id-label">Username</div>
+        <input type="text" name="username" placeholder="Username" class="login-input-box">
+
+        <div class="login-id-label">Password</div>
+        <input type="password" name="password" placeholder="password" class="login-input-box">
+
+        <div class="login-id-label">Content</div>
+        <input type="text" name="content" placeholder="Content" class="login-input-box">
+
+        <button id="login-id-submit">회원 가입</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('login-id-submit').addEventListener('click', function(event) {
+        event.preventDefault(); // 기본 폼 제출 동작 방지
+
+        const username = document.getElementsByName('username')[0].value;
+        const password = document.getElementsByName('password')[0].value;
+        const content = document.getElementsByName('content')[0].value;
+
+        const data = {
+            username: username,
+            password: password,
+            content: content
+        };
+
+        $.ajax({
+            url: '/api/user/signup',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function(response) {
+                console.log('Success:', response);
+                window.location.href = "/user/login-page";
+            },
+            error: function(error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+</script>
+<!---->
+</body>
+</html>
