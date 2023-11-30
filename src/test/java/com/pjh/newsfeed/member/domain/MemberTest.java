@@ -1,5 +1,6 @@
-package com.sparta.newsfeed.member.domain;
+package com.pjh.newsfeed.member.domain;
 
+import com.pjh.newsfeedtest.member.domain.Member;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -7,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MemberTest {
     @Test
-    @DisplayName("[Member] [domain] [Member] [Create]")
+    @DisplayName("[Member] [domain] [Member] Create")
     public void createMember(){
         // given
         String username = "username";

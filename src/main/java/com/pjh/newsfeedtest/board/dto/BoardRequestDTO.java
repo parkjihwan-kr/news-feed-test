@@ -19,5 +19,4 @@ public class BoardRequestDTO {
     @NotNull
     private String content;
     private List<String> fileNames;
-
 }

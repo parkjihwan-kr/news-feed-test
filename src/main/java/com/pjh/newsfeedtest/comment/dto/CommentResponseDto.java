@@ -1,6 +1,8 @@
 package com.pjh.newsfeedtest.comment.dto;
 
 import com.pjh.newsfeedtest.comment.domain.Comment;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +10,8 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class CommentResponseDto {
     private Long id; // 댓글 번호
     private String content; // 댓글 내용

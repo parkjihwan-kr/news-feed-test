@@ -1,4 +1,4 @@
-package com.sparta.newsfeed;
+package com.pjh.newsfeed;
 
 
 import lombok.RequiredArgsConstructor;

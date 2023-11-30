@@ -1,5 +1,6 @@
-package com.sparta.newsfeed.member.dto;
+package com.pjh.newsfeed.member.dto;
 
+import com.pjh.newsfeedtest.member.dto.MemberResponseDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

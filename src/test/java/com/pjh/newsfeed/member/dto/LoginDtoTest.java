@@ -1,5 +1,6 @@
-package com.sparta.newsfeed.member.dto;
+package com.pjh.newsfeed.member.dto;
 
+import com.pjh.newsfeedtest.member.dto.LoginDto;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
