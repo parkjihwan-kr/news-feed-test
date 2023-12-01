@@ -49,15 +49,6 @@ public class MemberService {
         Member memberEntity = memberDetails.getMember();
         String loginPassword = memberDetails.getPassword();
 
-//        String updateProfileUsername = updateProfileDto.getUsername();
-//
-//        if(!loginUsername.equals(updateProfileUsername)){
-//            throw new IllegalArgumentException("해당 로그인 유저네임과 변경하려는 사용자의 유저네임이 다릅니다.");
-//        }
-
-//        Member memberEntity = memberRepository.findByUsername(loginUsername).orElseThrow(
-//                ()-> new IllegalArgumentException("해당 아이디는 찾을 수 없습니다."));
-
         String rawPassword = updateProfileDto.getPassword();
         // 첫번째 입력받은 비밀번호
         String rawPasswordConfirm = updateProfileDto.getPasswordConfirm();

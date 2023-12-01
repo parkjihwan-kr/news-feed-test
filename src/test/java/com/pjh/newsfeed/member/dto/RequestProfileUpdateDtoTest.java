@@ -16,7 +16,7 @@ public class RequestProfileUpdateDtoTest {
         String passwordConfirm = "12341234";
 
         // when
-        RequestProfileUpdateDto requestProfileUpdateDto = new RequestProfileUpdateDto();
+        RequestProfileUpdateDto requestProfileUpdateDto = new RequestProfileUpdateDto(password, content, passwordConfirm);
 
         // then
         assertEquals(content, requestProfileUpdateDto.getContent());
