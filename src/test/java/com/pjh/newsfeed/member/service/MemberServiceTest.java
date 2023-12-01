@@ -122,7 +122,7 @@ public class MemberServiceTest {
     }
 
     @Test
-    @DisplayName("[Member] [Service] [MemberService] updateMember password와 passwordConfirm의 불일치")
+    @DisplayName("[Member] [Service] [MemberService] updateMember password != passwordConfirm")
     void updateMemberPasswordMismatch() {
         // Given
         Member member = Member.builder()

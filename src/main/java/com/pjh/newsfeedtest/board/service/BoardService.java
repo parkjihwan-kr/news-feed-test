@@ -54,7 +54,6 @@ public class BoardService {
         } else {
             throw new RuntimeException("작성자만 자신의 게시물을 수정할 수 있습니다.");
         }
-
     }
     public void delete(Long id, Member member) {
         Optional<Board> result = boardRepository.findById(id);
