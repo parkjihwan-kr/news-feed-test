@@ -28,34 +28,14 @@ public class CommentService {
         Board board = boardRepository.findById(boardId).orElseThrow(() ->
                 new IllegalArgumentException("게시글이 존재하지 않습니다."));
         log.info(board);
-       /* Comment comment = Comment.builder()
-                .member(member)
-                .content(commentRequestDto.getContent())
-                .board(board)
-                .build();*/
 
         Comment comment = new Comment(member, commentRequestDto, board);
+
         log.info("save");
         commentRepository.save(comment);
 
         return ResponseEntity.status(HttpStatus.OK).body(new CommentResponseDto(comment));
     }
-
-    /*// 댓글 조회
-    public List<CommentResponseDto> getComments(Long boardId) {
-        Board board = boardRepository.findById(boardId).orElseThrow(
-                () -> new NullPointerException("존재하지 않습니다")
-        );
-
-        List<Comment> commentList = commentRepository.findByBoardOrderByCreatedAtDesc(board);
-        List<CommentResponseDto> responseDtoList = new ArrayList<>();
-
-        for (Comment comment : commentList) {
-            responseDtoList.add(new CommentResponseDto(comment));
-        }
-
-        return responseDtoList;
-    }*/
 
     // 댓글 수정
     @Transactional
@@ -85,5 +65,4 @@ public class CommentService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("작성자만 삭제할 수 있습니다.");
         }
     }
-
 }

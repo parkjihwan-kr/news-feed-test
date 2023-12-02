@@ -1,7 +1,6 @@
-package com.pjh.newsfeed.comment.domain;
+package com.pjh.newsfeedtest.comment.domain;
 
 import com.pjh.newsfeedtest.board.domain.Board;
-import com.pjh.newsfeedtest.comment.domain.Comment;
 import com.pjh.newsfeedtest.comment.dto.CommentRequestDto;
 import com.pjh.newsfeedtest.member.domain.Member;
 import org.junit.jupiter.api.DisplayName;

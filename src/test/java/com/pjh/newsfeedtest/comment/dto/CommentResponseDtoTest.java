@@ -1,6 +1,5 @@
-package com.pjh.newsfeed.comment.dto;
+package com.pjh.newsfeedtest.comment.dto;
 
-import com.pjh.newsfeedtest.comment.dto.CommentResponseDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

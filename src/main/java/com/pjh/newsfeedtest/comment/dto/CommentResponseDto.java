@@ -19,7 +19,6 @@ public class CommentResponseDto {
     private LocalDateTime createAt; // 생성일
     private LocalDateTime modifiedAt; // 수정일
 
-
     public CommentResponseDto(Comment comment) {
         this.id = comment.getId();
         this.content = comment.getContent();
