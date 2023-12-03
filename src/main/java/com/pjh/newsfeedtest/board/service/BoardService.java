@@ -7,6 +7,7 @@ import com.pjh.newsfeedtest.board.dto.BoardResponseDTO;
 import com.pjh.newsfeedtest.board.repository.BoardRepository;
 import com.pjh.newsfeedtest.file.dto.BoardImageDTO;
 import com.pjh.newsfeedtest.member.domain.Member;
+import com.pjh.newsfeedtest.security.service.MemberDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +22,8 @@ import java.util.stream.Collectors;
 public class BoardService {
     private final BoardRepository boardRepository;
 
-    public void register(BoardRequestDTO boardRequestDTO, Member member) {
-        Board board = dtoToEntity(boardRequestDTO, member);
+    public void register(BoardRequestDTO boardRequestDTO, MemberDetailsImpl memberDetails) {
+        Board board = dtoToEntity(boardRequestDTO, memberDetails.getMember());
 
         boardRepository.save(board);
     }
@@ -35,11 +36,11 @@ public class BoardService {
         return boardResponseDTO;
     }
 
-    public void modify(Long id, BoardRequestDTO boardRequestDTO, Member member) {
+    public void modify(Long id, BoardRequestDTO boardRequestDTO, MemberDetailsImpl memberDetails) {
         Optional<Board> result = boardRepository.findById(id);
         Board board = result.orElseThrow();
 
-        if(member.getUsername().equals(board.getMember().getUsername())) {
+        if(memberDetails.getMember().getUsername().equals(board.getMember().getUsername())) {
             board.change(boardRequestDTO.getTitle(), boardRequestDTO.getContent());
             board.clearImages();
 
@@ -55,11 +56,11 @@ public class BoardService {
             throw new RuntimeException("작성자만 자신의 게시물을 수정할 수 있습니다.");
         }
     }
-    public void delete(Long id, Member member) {
+    public void delete(Long id, MemberDetailsImpl memberDetails) {
         Optional<Board> result = boardRepository.findById(id);
         Board board = result.orElseThrow();
 
-        if(member.getUsername().equals(board.getMember().getUsername())) {
+        if(memberDetails.getUsername().equals(board.getMember().getUsername())) {
             boardRepository.deleteById(id);
         } else {
             throw new RuntimeException("자신의 게시물만 삭제할 수 있습니다.");

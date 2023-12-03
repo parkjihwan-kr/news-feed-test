@@ -37,7 +37,7 @@ public class BoardRestController {
             throw new BindException(bindingResult);
         }
         Map<String, Object> map = new HashMap<>();
-        boardService.register(boardRequestDTO, memberDetails.getMember());
+        boardService.register(boardRequestDTO, memberDetails);
         map.put("result", "success");
         return ResponseEntity.ok(map);
     }
@@ -70,7 +70,7 @@ public class BoardRestController {
         }
         Map<String, Object> map = new HashMap<>();
 
-        boardService.modify(id, boardRequestDTO, memberDetails.getMember());
+        boardService.modify(id, boardRequestDTO, memberDetails);
 
         map.put("result", "success");
         return ResponseEntity.ok(map);
@@ -80,7 +80,7 @@ public class BoardRestController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, Object>> delete(@PathVariable("id") Long id,
                                                       @AuthenticationPrincipal MemberDetailsImpl memberDetails) {
-        boardService.delete(id, memberDetails.getMember());
+        boardService.delete(id, memberDetails);
         Map<String, Object> map = new HashMap<>();
         map.put("result", "success");
         return ResponseEntity.ok(map);

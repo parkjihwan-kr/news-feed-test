@@ -7,6 +7,7 @@ import com.pjh.newsfeedtest.board.dto.BoardResponseDTO;
 import com.pjh.newsfeedtest.board.repository.BoardRepository;
 import com.pjh.newsfeedtest.file.domain.BoardImage;
 import com.pjh.newsfeedtest.member.domain.Member;
+import com.pjh.newsfeedtest.security.service.MemberDetailsImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,6 +46,8 @@ class BoardServiceTest {
                 .content(memberContent)
                 .build();
 
+        MemberDetailsImpl memberDetails = new MemberDetailsImpl(member);
+
         String boardTitle = "title";
         String boardContent = "my Content";
 
@@ -71,7 +74,7 @@ class BoardServiceTest {
         // 해당 과정은 등록 과정이기에 createMockBoard() 사용하여 작성하지 않음.
 
         // when
-        boardService.register(boardRequestDTO, member);
+        boardService.register(boardRequestDTO, memberDetails);
 
         // then
         assertEquals(memberUsername, board.getMember().getUsername());
@@ -127,11 +130,17 @@ class BoardServiceTest {
                 .content("modifyContent")
                 .build();
 
+        Member member = Member.builder()
+                .username("username")
+                .password("password")
+                .build();
+
+        MemberDetailsImpl memberDetails = new MemberDetailsImpl(member);
         // 해당 내용을 수정하기 위해 BoardRequestDto를 사용하여 가져옴
         when(boardRepository.findById(board.getId())).thenReturn(Optional.of(board));
 
         // when
-        boardService.modify(board.getId(), boardRequestDTO, board.getMember());
+        boardService.modify(board.getId(), boardRequestDTO, memberDetails);
 
         // then
         assertEquals(boardRequestDTO.getTitle(), board.getTitle());
@@ -154,15 +163,18 @@ class BoardServiceTest {
                 .content("biography")
                 .build();
 
+        MemberDetailsImpl memberDetails = new MemberDetailsImpl(Member.builder().username("authorizedUsername").build());
+
         Board board = Board.builder()
                 .title(boardRequestDTO.getTitle())
                 .content(boardRequestDTO.getContent())
-                .member(Member.builder().username("authorizedUsername").build()).build();
+                .member(unauthorizedMember)
+                .build();
 
         when(boardRepository.findById(board.getId())).thenReturn(Optional.of(board));
 
         // when
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> boardService.modify(board.getId(), boardRequestDTO, unauthorizedMember));
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> boardService.modify(board.getId(), boardRequestDTO, memberDetails));
 
         // Then
         assertEquals("작성자만 자신의 게시물을 수정할 수 있습니다.", exception.getMessage());
@@ -206,10 +218,11 @@ class BoardServiceTest {
         // given
         Board board = createMockBoard();
 
+        MemberDetailsImpl memberDetails = new MemberDetailsImpl(Member.builder().username("username").build());
         when(boardRepository.findById(board.getId())).thenReturn(Optional.of(board));
 
         // When
-        boardService.delete(board.getId(), board.getMember());
+        boardService.delete(board.getId(), memberDetails);
 
         // Then
         verify(boardRepository, times(1)).deleteById(board.getId());
@@ -219,17 +232,20 @@ class BoardServiceTest {
     @DisplayName("[Board] [Service] [BoardService] delete unauthorizedUsername")
     public void deleteUnauthorizedUsername() {
         // Given
-        Board board = Board.builder()
-                .member(Member.builder().username("authorizedUsername").build()).build();
         Member unauthorizedMember = Member.builder()
                 .username("unauthorizedUsername")
                 .build();
+
+        Board board = Board.builder()
+                .member(unauthorizedMember).build();
+
+        MemberDetailsImpl memberDetails = new MemberDetailsImpl(Member.builder().username("username").build());
 
         when(boardRepository.findById(board.getId())).thenReturn(Optional.of(board));
 
         // When
         RuntimeException exception = assertThrows(RuntimeException.class,
-                () -> boardService.delete(board.getId(), unauthorizedMember));
+                () -> boardService.delete(board.getId(), memberDetails));
 
         // Then
         assertEquals("자신의 게시물만 삭제할 수 있습니다.", exception.getMessage());
