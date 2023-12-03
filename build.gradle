@@ -42,6 +42,7 @@ dependencies {
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'com.h2database:h2:1.4.200' // 현재 H2DB의 최신 버전으로 업데이트
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
@@ -50,6 +51,7 @@ dependencies {
 
     implementation 'org.modelmapper:modelmapper:3.2.0'
 
+    testImplementation 'org.mockito:mockito-core:4.8.0'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 

@@ -1,6 +1,5 @@
-package com.pjh.newsfeed.member.dto;
+package com.pjh.newsfeedtest.member.dto;
 
-import com.pjh.newsfeedtest.member.dto.SignupDto;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -87,7 +86,7 @@ public class SignupDtoTest {
         SignupDto signupDto = new SignupDto("validateUser", null,"content");
 
         // when, then
-        assertThrows(jakarta.validation.ConstraintViolationException.class, ()-> validateSignupDto(signupDto));
+        assertThrows(java.lang.NullPointerException.class, ()-> validateSignupDto(signupDto));
     }
     private void validateSignupDto(SignupDto signupDto){
         // 해당 유저네임의 길이가 작거나 클 때

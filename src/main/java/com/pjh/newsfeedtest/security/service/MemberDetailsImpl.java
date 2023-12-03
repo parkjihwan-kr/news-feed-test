@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 
 public class MemberDetailsImpl implements UserDetails {
 
@@ -27,7 +28,7 @@ public class MemberDetailsImpl implements UserDetails {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(simpleGrantedAuthority);
         */
-        return null;
+        return Collections.emptyList();
     }
 
     @Override

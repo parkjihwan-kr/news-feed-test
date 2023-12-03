@@ -1,6 +1,5 @@
-package com.pjh.newsfeed.board.dto;
+package com.pjh.newsfeedtest.board.dto;
 
-import com.pjh.newsfeedtest.board.dto.BoardRequestDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

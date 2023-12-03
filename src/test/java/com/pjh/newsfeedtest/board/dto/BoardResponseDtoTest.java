@@ -1,12 +1,8 @@
-package com.pjh.newsfeed.board.dto;
+package com.pjh.newsfeedtest.board.dto;
 
-import com.pjh.newsfeedtest.board.domain.Board;
-import com.pjh.newsfeedtest.board.dto.BoardResponseDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.cglib.core.Local;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;

@@ -1,6 +1,5 @@
-package com.pjh.newsfeed.member.domain;
+package com.pjh.newsfeedtest.member.domain;
 
-import com.pjh.newsfeedtest.member.domain.Member;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

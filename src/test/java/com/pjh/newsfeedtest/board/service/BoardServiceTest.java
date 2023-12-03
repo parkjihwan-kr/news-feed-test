@@ -1,11 +1,10 @@
-package com.pjh.newsfeed.board.service;
+package com.pjh.newsfeedtest.board.service;
 
 import com.pjh.newsfeedtest.board.domain.Board;
 import com.pjh.newsfeedtest.board.dto.BoardListAllDTO;
 import com.pjh.newsfeedtest.board.dto.BoardRequestDTO;
 import com.pjh.newsfeedtest.board.dto.BoardResponseDTO;
 import com.pjh.newsfeedtest.board.repository.BoardRepository;
-import com.pjh.newsfeedtest.board.service.BoardService;
 import com.pjh.newsfeedtest.file.domain.BoardImage;
 import com.pjh.newsfeedtest.member.domain.Member;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.webjars.NotFoundException;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -22,6 +21,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 class BoardServiceTest {
 

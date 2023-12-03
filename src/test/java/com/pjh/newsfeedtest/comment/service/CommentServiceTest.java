@@ -35,8 +35,6 @@ import static org.mockito.Mockito.*;
 @Slf4j
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")
-@Transactional
-@Rollback(false)
 public class CommentServiceTest {
 
     @Mock
@@ -59,8 +57,6 @@ public class CommentServiceTest {
 
     @Test
     @DisplayName("[Comment] [Service] createComment Success")
-    @Transactional
-    @Rollback(false)
     void createCommentSuccess() {
         CommentRequestDto requestDto = CommentRequestDto.builder()
                 .content("comment test")
@@ -75,7 +71,7 @@ public class CommentServiceTest {
                 .build();
         // 게시판에 작성하는 Member는 MemberDetails에 존재하는 Member이기에
 
-        boardRepository.save(board);
+        when(boardRepository.findById(board.getId())).thenReturn(Optional.of(board));
         // 해당 board에 게시글이 있어야 comment를 작성할 수 있기에
 
         // when
@@ -84,7 +80,7 @@ public class CommentServiceTest {
         // Then
         assertEquals(HttpStatus.OK, responseDto.getStatusCode());
         assertEquals(requestDto.getContent(),responseDto.getBody().getContent());
-        assertEquals("user1",responseDto.getBody().getUsername());
+        assertEquals(loginMember.getMember().getUsername(),responseDto.getBody().getUsername());
         assertNotNull(responseDto.getBody());
     }
 

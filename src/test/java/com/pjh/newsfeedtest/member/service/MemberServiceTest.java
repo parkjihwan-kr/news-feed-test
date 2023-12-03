@@ -1,23 +1,20 @@
-package com.pjh.newsfeed.member.service;
+package com.pjh.newsfeedtest.member.service;
 
 import com.pjh.newsfeedtest.member.domain.Member;
 import com.pjh.newsfeedtest.member.dto.MemberResponseDTO;
 import com.pjh.newsfeedtest.member.dto.RequestProfileUpdateDto;
 import com.pjh.newsfeedtest.member.dto.SignupDto;
 import com.pjh.newsfeedtest.member.repository.MemberRepository;
-import com.pjh.newsfeedtest.member.service.MemberService;
 import com.pjh.newsfeedtest.security.service.MemberDetailsImpl;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -26,6 +23,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 public class MemberServiceTest {
     @Mock
