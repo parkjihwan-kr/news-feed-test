@@ -11,6 +11,7 @@ import com.pjh.newsfeedtest.member.domain.Member;
 import com.pjh.newsfeedtest.member.repository.MemberRepository;
 import com.pjh.newsfeedtest.security.service.MemberDetailsImpl;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -75,7 +76,7 @@ public class CommentServiceTest {
         // 해당 board에 게시글이 있어야 comment를 작성할 수 있기에
 
         // when
-        ResponseEntity<CommentResponseDto> responseDto = commentService.createComment(board.getId(), requestDto, loginMember.getMember());
+        ResponseEntity<CommentResponseDto> responseDto = commentService.createComment(board.getId(), requestDto, loginMember);
 
         // Then
         assertEquals(HttpStatus.OK, responseDto.getStatusCode());
@@ -101,7 +102,7 @@ public class CommentServiceTest {
         boardRepository.save(board);
 
         // when, then
-        assertThrows(java.lang.IllegalArgumentException.class, ()->commentService.createComment(board.getId(),requestDto, loginMember.getMember()));
+        assertThrows(java.lang.IllegalArgumentException.class, ()->commentService.createComment(board.getId(),requestDto, loginMember));
     }
 
     @Test
@@ -129,7 +130,7 @@ public class CommentServiceTest {
         when(commentRepository.findById(comment.getId())).thenReturn(Optional.of(comment));
 
         // when
-        ResponseEntity<?> responseEntity = commentService.updateComment(comment.getId(), requestDto, loginMember.getMember());
+        ResponseEntity<?> responseEntity = commentService.updateComment(comment.getId(), requestDto, loginMember);
 
         // then
         verify(commentRepository, times(1)).findById(comment.getId());
@@ -148,10 +149,11 @@ public class CommentServiceTest {
         when(commentRepository.findById(commentId)).thenReturn(Optional.empty());
 
         // when, then
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> commentService.updateComment(commentId, requestDto, loginMember.getMember()));
+        // when, then
+        jakarta.persistence.EntityNotFoundException exception = assertThrows(jakarta.persistence.EntityNotFoundException.class,
+                () -> commentService.updateComment(commentId, requestDto, loginMember));
 
-        assertEquals("댓글이 존재하지 않습니다.", exception.getMessage());
+        assertEquals("댓글에 해당하는 id가 존재하지 않습니다.", exception.getMessage());
 
         verify(commentRepository, never()).save(any(Comment.class));
     }
@@ -173,7 +175,7 @@ public class CommentServiceTest {
         when(commentRepository.findById(comment.getId())).thenReturn(Optional.of(comment));
 
         // when
-        ResponseEntity<?> response = commentService.updateComment(comment.getId(), requestDto, loginMember.getMember());
+        ResponseEntity<?> response = commentService.updateComment(comment.getId(), requestDto, loginMember);
 
         // then
         verify(commentRepository, times(1)).findById(comment.getId());

@@ -7,6 +7,8 @@ import com.pjh.newsfeedtest.comment.dto.CommentRequestDto;
 import com.pjh.newsfeedtest.comment.dto.CommentResponseDto;
 import com.pjh.newsfeedtest.comment.repository.CommentRepository;
 import com.pjh.newsfeedtest.member.domain.Member;
+import com.pjh.newsfeedtest.security.service.MemberDetailsImpl;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -23,13 +25,13 @@ public class CommentService {
 
     // 댓글 작성
     @Transactional
-    public ResponseEntity<CommentResponseDto> createComment(Long boardId, CommentRequestDto commentRequestDto, Member member) {
+    public ResponseEntity<CommentResponseDto> createComment(Long boardId, CommentRequestDto commentRequestDto, MemberDetailsImpl memberDetails) {
         // 게시글 있는 지 확인
         Board board = boardRepository.findById(boardId).orElseThrow(() ->
                 new IllegalArgumentException("게시글이 존재하지 않습니다."));
         log.info(board);
 
-        Comment comment = new Comment(member, commentRequestDto, board);
+        Comment comment = new Comment(memberDetails.getMember(), commentRequestDto, board);
 
         log.info("save");
         commentRepository.save(comment);
@@ -39,12 +41,12 @@ public class CommentService {
 
     // 댓글 수정
     @Transactional
-    public ResponseEntity<?> updateComment(Long commentId, CommentRequestDto commentRequestDto, Member member) {
-        Comment comment = commentRepository.findById(commentId).orElseThrow(() ->
-                new IllegalArgumentException("댓글이 존재하지 않습니다."));
+    public ResponseEntity<?> updateComment(Long commentId, CommentRequestDto commentRequestDto, MemberDetailsImpl memberDetails) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new EntityNotFoundException("댓글에 해당하는 id가 존재하지 않습니다."));
 
         // 댓글 작성자와 입력값 작성자 비교, 일치하면 ㄱㄱ
-        if (comment.getMember().getUsername().equals(member.getUsername())) {
+        if (comment.getMember().getUsername().equals(memberDetails.getMember().getUsername())) {
             comment.update(commentRequestDto);
             return ResponseEntity.status(HttpStatus.OK).body(new CommentResponseDto(comment));
         } else {
