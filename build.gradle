@@ -38,6 +38,7 @@ dependencies {
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 
     testCompileOnly 'org.projectlombok:lombok:1.18.30'
+    testCompileOnly group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
